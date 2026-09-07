@@ -143,6 +143,7 @@ export type PiAiChatTemplateVar = Extract<ChatTemplateKwargValue, { $var: string
 const CHAT_TEMPLATE_VAR_GATE: Record<PiAiChatTemplateVar, true> = {
   'thinking.enabled': true,
   'thinking.effort': true,
+  'thinking.budget': true,
 }
 
 /** The request-state placeholders a profile may name. */
@@ -229,6 +230,7 @@ const COMPLETIONS_COMPAT_GATE = {
   chatTemplateKwargs: 'offer',
   chatTemplateArgs: 'offer',
   supportsThinkingTokenBudget: 'offer',
+  thinkingTokenBudgetField: 'withhold',
   supportsStrictMode: 'offer',
   cacheControlFormat: 'offer',
   supportsLongCacheRetention: 'offer',
@@ -239,6 +241,7 @@ const COMPLETIONS_COMPAT_GATE = {
   sendSessionAffinityHeaders: 'withhold',
   deferredToolsMode: 'withhold',
   sessionAffinityFormat: 'withhold',
+  vllmPriority: 'withhold',
 } as const satisfies Record<keyof OpenAICompletionsCompat, CompatDisposition>
 
 /** Disposition of every `OpenAIResponsesCompat` field; a drift gate like the one above. */
@@ -251,6 +254,7 @@ const RESPONSES_COMPAT_GATE = {
   supportsAdditionalTools: 'withhold',
   supportsToolSearch: 'withhold',
   supportsExplicitPromptCacheMode: 'withhold',
+  supportsMaxOutputTokens: 'withhold',
 } as const satisfies Record<keyof OpenAIResponsesCompat, CompatDisposition>
 
 /** Disposition of every `AnthropicMessagesCompat` field; a drift gate like the one above. */
@@ -263,6 +267,8 @@ const ANTHROPIC_COMPAT_GATE = {
   allowEmptySignature: 'offer',
   supportsStrictTools: 'offer',
   sendSessionAffinityHeaders: 'withhold',
+  supportsMidConvoEffort: 'withhold',
+  allowedFallbackModels: 'withhold',
   supportsToolReferences: 'withhold',
 } as const satisfies Record<keyof AnthropicMessagesCompat, CompatDisposition>
 
